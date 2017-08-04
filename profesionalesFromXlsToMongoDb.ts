@@ -6,8 +6,8 @@ var MongoClient = require('mongodb').MongoClient;
 var mongoXlsx: any = require('mongo-xlsx');
 
 var model = null;
-let url = configPrivate.urlMongoAndes;
-let coleccion = configPrivate.collectionName;
+let url = configPrivate.connectionString;
+let coleccion = configPrivate.collection;
 
 MongoClient.connect(url, function (err, db) {
     if (err) {

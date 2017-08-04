@@ -1,2 +1,2 @@
-export const xlsx = 'profesionales.xlsx';
+export const xlsx = './files/profesionales.xlsx';
 
