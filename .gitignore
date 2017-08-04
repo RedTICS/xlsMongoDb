@@ -1,6 +1,10 @@
 # Archivos de configuración
 config.private.ts
 
+# Archivos Privados
+
+*.xlsx
+
 # Logs
 logs
 **/*.log
