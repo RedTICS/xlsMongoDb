@@ -1,20 +1,21 @@
 {
   "name": "xlsimporter",
   "version": "1.0.0",
-  "description": "Importador a mongodb de financiadores",
-  "main": "exporterMongodb.js",
+  "description": "Importa archivos XLS a Mongodb",
+  "main": "profesionalesFromXlsToMongoDb.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hugo H. Fernández",
   "license": "ISC",
   "dependencies": {
-    "typings": "^2.1.1",
     "jsdoc": "^3.4.0",
     "jsonfile": "^2.4.0",
-    "mongodb": "^2.2.11",
+    "mongo-xlsx": "^1.0.12",
+    "mongodb": "^2.2.30",
     "request": "^2.78.0",
     "typescript": "^2.0.6",
+    "typings": "^2.1.1",
     "xml2json": "^0.10.0",
     "xmljson": "^0.2.0"
   }
