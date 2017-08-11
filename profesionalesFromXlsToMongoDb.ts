@@ -17,6 +17,9 @@ let url = configPrivate.urlMongoAndes;
 let coleccion = configPrivate.collection;
 let profesionalOperations = new ProfesionalAndes();
 let unToken = 1;
+let cantProfesionalesActualizados = 0;
+let cantProfesionalesNuevos = 0;
+let cantProfesionalesNuevoBajoMatch = 0;
 
 mongoClient.connect(url, function (err, db) {
     if (err) {
@@ -49,8 +52,10 @@ mongoClient.connect(url, function (err, db) {
                         }
                     ],
                 };
-                // Condición de búsqueda para ver si el profesinal ya existe en la BD    
+                // Condición de búsqueda para ver si el profesinal ya existe en la BD  
+               
                 let condicion = {
+                    
                     'documento': datos.numeroDocumento,
                 };
                 db.collection(coleccion).find(condicion).toArray(function (err, profesionalEncontrado: any) {
@@ -58,23 +63,31 @@ mongoClient.connect(url, function (err, db) {
                         let profDB = profesionalEncontrado[0];
                         let match = new matching();
                         let valorMatching = match.matchPersonas(profDB, profXLS, config.weights, config.algorithms);
+                        // Tengo que convertir el valor numérico del documento a string
+                        profXLS.documento = String(profXLS.documento);
                         if (valorMatching > 0.9) {
-                            console.log('id', profDB._id);
                             profesionalOperations.updateProfesional(profXLS, profDB._id)
                                 .then((rta: any) => {
-                                    console.log('Entro para hacer el update del paciente ', profXLS);
+                                    cantProfesionalesActualizados = cantProfesionalesActualizados + 1;
+                                    console.log('Entro para hacer el update del paciente ', cantProfesionalesActualizados, 'valor Match: ', valorMatching);
                                 })
                         } else {
                             profesionalOperations.addProfesional(profXLS)
                                 .then((rta: any) => {
-                                    console.log('Entro para hacer un insert del paciente ', profXLS);
+                                    cantProfesionalesNuevoBajoMatch = cantProfesionalesNuevoBajoMatch + 1;
+                                    console.log('Entro para hacer un insert por bajo % ', cantProfesionalesNuevoBajoMatch, 'valor Match: ', valorMatching);
                                 })
                         }
                     } else {
                         // Si no encontró ningún registro directamente lo inserta en la BD
+                        
+                        // Tengo que convertir el valor numérico del documento a string
+                        profXLS.documento = String(profXLS.documento);
+
                         profesionalOperations.addProfesional(profXLS)
                             .then((rta: any) => {
-                                console.log('Entro para hacer un insert del paciente ', profXLS);
+                                cantProfesionalesNuevos = cantProfesionalesNuevos + 1;
+                                console.log('Entro para hacer un insert del paciente ', cantProfesionalesNuevos);
                             })
 
                     }

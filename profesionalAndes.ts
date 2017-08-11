@@ -33,7 +33,6 @@ export class ProfesionalAndes {
     updateProfesional(profesional: any, id) {
         return new Promise((resolve: any, reject: any) => {
             let identificador = id;
-            console.log('El id por parametro', identificador);
             let options = {
                 host: configPrivate.hostApi,
                 port: configPrivate.portApi,
