@@ -1,4 +1,4 @@
-export const xlsx = './files/profesionales.xlsx';
+export const xlsx = './files/profesionales2.xlsx';
 export const algorithms = 'Levenshtein';
 // Estos pesos se deben a que no tenemos los datos de fecha de nacimiento y sexo en el excel
 export const weights = {
